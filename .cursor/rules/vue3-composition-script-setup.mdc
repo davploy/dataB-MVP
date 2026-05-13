@@ -1,0 +1,36 @@
+---
+description: Vue 3 — Composition API and script setup for SFCs
+alwaysApply: true
+---
+
+# Vue 3 — Composition API + `<script setup>`
+
+All Single-File Components must use the **Composition API** inside **`<script setup>`**.
+
+- Do **not** use the Options API (`export default { data, methods, computed, ... }`).
+- Do **not** use `<script>` without `setup` for component logic (except rare advanced cases like separate non-setup scripts — prefer one `<script setup>` block).
+
+Use Vue’s Composition API imports (`ref`, `computed`, `watch`, `onMounted`, etc.), `defineProps`, `defineEmits`, and `defineExpose` as needed.
+
+```vue
+<!-- ✅ GOOD -->
+<script setup>
+import { ref, computed } from 'vue'
+
+const count = ref(0)
+const doubled = computed(() => count.value * 2)
+</script>
+```
+
+```vue
+<!-- ❌ BAD — Options API -->
+<script>
+export default {
+  data() {
+    return { count: 0 }
+  },
+}
+</script>
+```
+
+If the project uses TypeScript in Vue files, use `<script setup lang="ts">` and type props/emits accordingly.
