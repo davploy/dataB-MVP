@@ -34,8 +34,12 @@ class CSVAnalyzer:
         self.client = Anthropic(api_key=self.api_key)
         self.prompt_template = _load_prompt()
         
-        schema_json = os.getenv("OUTPUT_SCHEMA")
-        self.reference_schema = json.loads(schema_json)
+        schema_path = os.getenv("OUTPUT_SCHEMA")
+        base_dir = Path(__file__).parent
+        full_path = base_dir / schema_path
+        
+        with open(full_path, "r", encoding="utf-8") as f:
+            self.output_schema = json.load(f)
     
     def _parse_csv(self, csv_text: str) -> tuple[List[str], List[Dict[str, Any]]]:
         """Parse CSV text into headers and rows."""
@@ -51,7 +55,7 @@ class CSVAnalyzer:
         
         # Format prompt with reference schema and CSV text
         formatted_prompt = self.prompt_template.format(
-            reference_schema=json.dumps(self.reference_schema, indent=2),
+            reference_schema=json.dumps(self.output_schema, indent=2),
             csv_text=csv_text
         )
         
