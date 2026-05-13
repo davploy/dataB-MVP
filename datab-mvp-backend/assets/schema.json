@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CSV Analysis Report",
+  "description": "Structured output from CSV data analysis",
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "filename": {
+          "type": "string",
+          "description": "Name of the analyzed CSV file"
+        },
+        "total_rows": {
+          "type": "integer",
+          "description": "Total number of data rows"
+        },
+        "total_columns": {
+          "type": "integer",
+          "description": "Total number of columns"
+        },
+        "analysis_timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the analysis was performed"
+        }
+      },
+      "required": ["filename", "total_rows", "total_columns"]
+    },
+    "column_analysis": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "column_name": {
+            "type": "string"
+          },
+          "data_type": {
+            "type": "string",
+            "enum": ["string", "integer", "float", "boolean", "date", "mixed"]
+          },
+          "non_null_count": {
+            "type": "integer"
+          },
+          "null_count": {
+            "type": "integer"
+          },
+          "unique_values": {
+            "type": "integer"
+          },
+          "sample_values": {
+            "type": "array",
+            "maxItems": 3
+          }
+        },
+        "required": ["column_name", "data_type", "non_null_count", "null_count"]
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "data_quality_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Quality score based on completeness and consistency"
+        },
+        "issues_found": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of data quality issues"
+        },
+        "key_insights": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Analytical insights from the data"
+        }
+      }
+    }
+  },
+  "required": ["metadata", "column_analysis", "summary"]
+}

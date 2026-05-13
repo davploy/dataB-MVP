@@ -39,6 +39,11 @@ function onUploadResult(payload) {
           <h3 class="section-title">Server / upload message</h3>
           <pre class="preview detail-preview">{{ lastResult.detail }}</pre>
         </template>
+        <!-- NEW BOX: Analysis JSON Results -->
+        <template v-if="lastResult.analysis">
+          <h3 class="section-title">Analysis Result (from LLM)</h3>
+          <pre class="preview">{{ JSON.stringify(lastResult.analysis, null, 2) }}</pre>
+        </template>
       </template>
     </main>
   </div>

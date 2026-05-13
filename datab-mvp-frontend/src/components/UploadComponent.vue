@@ -43,6 +43,7 @@ async function onFileChange(event) {
       ok: false,
       status: null,
       detail,
+      analysis: response.data
     })
     return
   }
