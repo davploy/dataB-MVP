@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-anthropic = "==0.34.2"
+anthropic = "==0.101.0"
 flask = "==3.0.0"
 python-dotenv = "==1.0.0"
 flask-cors = "==6.0.2"
