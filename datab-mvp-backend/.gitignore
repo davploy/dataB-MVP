@@ -2,3 +2,5 @@
 pycache__/
 __pycache__/    
 *.pyc
+test.py
+**/assets/files/

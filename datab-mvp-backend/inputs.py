@@ -35,6 +35,9 @@ def analyze():
         return {'status': 'success', 'result': result}
 
     except Exception as e:
+        import traceback
+        print(f"ERROR in /analyze: {str(e)}", flush=True)
+        print(traceback.format_exc(), flush=True)
         return {'status': 'error', 'message': str(e)}, 500
 
 if __name__ == '__main__':

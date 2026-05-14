@@ -2,6 +2,7 @@ import os
 import json
 import csv
 import io
+import re
 from pathlib import Path
 from typing import Dict, Any, List
 
@@ -54,20 +55,28 @@ class CSVAnalyzer:
         headers, rows = self._parse_csv(csv_text)
         
         # Format prompt with reference schema and CSV text
-        formatted_prompt = self.prompt_template.format(
-            reference_schema=json.dumps(self.output_schema, indent=2),
-            csv_text=csv_text
+        formatted_prompt = self.prompt_template.replace(
+            "{reference_schema}", json.dumps(self.output_schema, indent=2)
+        ).replace(
+            "{csv_text}", csv_text
         )
         
         # Call Anthropic API
         message = self.client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model="claude-sonnet-4-5",
             max_tokens=4096,
             messages=[{"role": "user", "content": formatted_prompt}]
         )
         
         # Extract and parse response
         response_text = message.content[0].text
+        print(f"API Response: {response_text}", flush=True)
+        
+        # Strip markdown code block if Claude wrapped it
+        response_text = re.sub(r'^```(?:json)?\s*\n?', '', response_text)
+        response_text = re.sub(r'\n?```$', '', response_text)
+        response_text = response_text.strip()
+        
         result = json.loads(response_text)
         
         return result
