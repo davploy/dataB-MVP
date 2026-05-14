@@ -39,23 +39,22 @@ function onAnalyzeResult(payload) {
           <span class="sep">·</span>
           <span :class="lastResult.ok ? 'state-ok' : 'state-err'">
             {{ lastResult.ok ? 'OK' : 'Error' }}
-            <template v-if="lastResult.status != null">
-              ({{ lastResult.status }})
-            </template>
           </span>
         </p>
-        <template v-if="lastResult.csvText">
-          <h3 class="section-title">CSV (from your file)</h3>
-          <pre class="preview">{{ lastResult.csvText }}</pre>
-        </template>
-        <template v-if="lastResult.detail">
-          <h3 class="section-title">Server / upload message</h3>
-          <pre class="preview detail-preview">{{ lastResult.detail }}</pre>
-        </template>
-        <template v-if="analysisResult">
-          <h3 class="section-title">Analysis Result (from LLM)</h3>
-          <pre class="preview">{{ JSON.stringify(analysisResult, null, 2) }}</pre>
-        </template>
+        <div class="columns">
+          <div class="column">
+            <template v-if="lastResult.csvText">
+              <h3 class="section-title">CSV</h3>
+              <pre class="preview">{{ lastResult.csvText }}</pre>
+            </template>
+          </div>
+          <div class="column">
+            <template v-if="analysisResult">
+              <h3 class="section-title">Analysis Result (from LLM)</h3>
+              <pre class="preview">{{ JSON.stringify(analysisResult, null, 2) }}</pre>
+            </template>
+          </div>
+        </div>
       </template>
     </main>
   </div>
@@ -85,6 +84,8 @@ function onAnalyzeResult(payload) {
   flex: 1;
   padding: 24px;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .viewer-title {
@@ -134,5 +135,25 @@ function onAnalyzeResult(payload) {
 .detail-preview {
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+.columns {
+  display: flex;
+  gap: 24px;
+  flex: 1;
+  min-height: 0;
+}
+
+.column {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.column .preview {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
 }
 </style>
