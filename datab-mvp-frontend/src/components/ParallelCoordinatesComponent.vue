@@ -90,6 +90,12 @@ function renderParallelCoordinates() {
   // X scale for axes positions
   const xScale = d3.scalePoint().domain(columns).range([0, width])
 
+  // Convert outlier indices to Set for O(1) lookup
+  const outlierSet = new Set(outlierIndices)
+
+  // Create lineGenerator once, reuse for all rows
+  const lineGenerator = d3.line()
+
   // Draw axes
   columns.forEach((col, i) => {
     const xPos = xScale(col)
@@ -117,13 +123,11 @@ function renderParallelCoordinates() {
 
   // Draw polylines for each data row
   data.forEach(row => {
-    const isOutlier = outlierIndices.includes(row.__rowIndex)
+    const isOutlier = outlierSet.has(row.__rowIndex)
     const points = columns.map((col, i) => [
       xScale(col),
       scales[col](row[col])
     ])
-
-    const lineGenerator = d3.line()
 
     svg
       .append('path')
@@ -200,7 +204,7 @@ watch(() => props.analysisResult, () => {
 .svg-container {
   width: 100%;
   max-width: 900px;
-  overflow-x: auto;
+  overflow: hidden;
 }
 
 .error-message {

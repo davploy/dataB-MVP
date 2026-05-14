@@ -7,7 +7,7 @@ const props = defineProps({
   analysisResult: Object
 })
 
-const activeTab = ref('visualization')
+const activeTab = ref('json')
 </script>
 
 <template>
@@ -104,5 +104,11 @@ const activeTab = ref('visualization')
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
 }
 </style>
