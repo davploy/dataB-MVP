@@ -54,9 +54,10 @@ class CSVAnalyzer:
         headers, rows = self._parse_csv(csv_text)
         
         # Format prompt with reference schema and CSV text
-        formatted_prompt = self.prompt_template.format(
-            reference_schema=json.dumps(self.output_schema, indent=2),
-            csv_text=csv_text
+        formatted_prompt = self.prompt_template.replace(
+            "{reference_schema}", json.dumps(self.output_schema, indent=2)
+        ).replace(
+            "{csv_text}", csv_text
         )
         
         # Call Anthropic API
