@@ -19,4 +19,4 @@ Return a JSON object with this structure:
     "issues": [{"row": N, "field": "name", "issue": "description", "severity": "error|warning"}]
 }}
 
-Only return valid JSON, no other text."""
+Return ONLY valid JSON, no markdown formatting, no ```json markers, no preamble or explanation. Start directly with { and end with }."""

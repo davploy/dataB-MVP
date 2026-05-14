@@ -2,6 +2,7 @@ import os
 import json
 import csv
 import io
+import re
 from pathlib import Path
 from typing import Dict, Any, List
 
@@ -69,6 +70,13 @@ class CSVAnalyzer:
         
         # Extract and parse response
         response_text = message.content[0].text
+        print(f"API Response: {response_text}", flush=True)
+        
+        # Strip markdown code block if Claude wrapped it
+        response_text = re.sub(r'^```(?:json)?\s*\n?', '', response_text)
+        response_text = re.sub(r'\n?```$', '', response_text)
+        response_text = response_text.strip()
+        
         result = json.loads(response_text)
         
         return result
