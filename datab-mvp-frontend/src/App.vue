@@ -2,6 +2,8 @@
 import { ref } from 'vue'
 import UploadComponent from './components/UploadComponent.vue'
 import AnalyzeComponent from './components/AnalyzeComponent.vue'
+import CsvPreviewComponent from './components/CsvPreviewComponent.vue'
+import ResultJSONPreviewComponent from './components/ResultJSONPreviewComponent.vue'
 
 const lastResult = ref(null)
 const analysisResult = ref(null)
@@ -30,10 +32,7 @@ function onAnalyzeResult(payload) {
     </aside>
     <main class="viewer">
       <h2 class="viewer-title">Viewer</h2>
-      <p v-if="!lastResult" class="muted">
-        Upload a CSV to see the response here.
-      </p>
-      <template v-else>
+      <template v-if="lastResult">
         <p class="meta">
           <strong>{{ lastResult.filename }}</strong>
           <span class="sep">·</span>
@@ -41,21 +40,15 @@ function onAnalyzeResult(payload) {
             {{ lastResult.ok ? 'OK' : 'Error' }}
           </span>
         </p>
-        <div class="columns">
-          <div class="column">
-            <template v-if="lastResult.csvText">
-              <h3 class="section-title">CSV</h3>
-              <pre class="preview">{{ lastResult.csvText }}</pre>
-            </template>
-          </div>
-          <div class="column">
-            <template v-if="analysisResult">
-              <h3 class="section-title">Analysis Result (from LLM)</h3>
-              <pre class="preview">{{ JSON.stringify(analysisResult, null, 2) }}</pre>
-            </template>
-          </div>
-        </div>
       </template>
+      <div class="columns">
+        <div class="column">
+          <CsvPreviewComponent :csv-text="lastResult?.csvText" />
+        </div>
+        <div class="column">
+          <ResultJSONPreviewComponent :analysis-result="analysisResult" />
+        </div>
+      </div>
     </main>
   </div>
 </template>
@@ -84,6 +77,7 @@ function onAnalyzeResult(payload) {
   flex: 1;
   padding: 24px;
   min-width: 0;
+  min-height: 0;
   display: flex;
   flex-direction: column;
 }
@@ -91,6 +85,7 @@ function onAnalyzeResult(payload) {
 .viewer-title {
   margin: 0 0 16px;
   font-size: 20px;
+  flex-shrink: 0;
 }
 
 .muted {
@@ -101,6 +96,7 @@ function onAnalyzeResult(payload) {
   margin: 0 0 16px;
   font-size: 14px;
   color: var(--text-secondary);
+  flex-shrink: 0;
 }
 
 .sep {
@@ -115,28 +111,6 @@ function onAnalyzeResult(payload) {
   color: var(--error);
 }
 
-.section-title {
-  margin: 24px 0 12px;
-  font-size: 16px;
-}
-
-.preview {
-  margin: 0;
-  padding: 16px;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow-x: auto;
-  font-size: 13px;
-  line-height: 1.5;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.detail-preview {
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-
 .columns {
   display: flex;
   gap: 24px;
@@ -147,13 +121,8 @@ function onAnalyzeResult(payload) {
 .column {
   flex: 1;
   min-width: 0;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-}
-
-.column .preview {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
 }
 </style>
