@@ -9,8 +9,8 @@ from typing import Dict, Any, List
 from anthropic import Anthropic
 from dotenv import load_dotenv
 
-
-load_dotenv()
+_REPO_ROOT = Path(__file__).resolve().parent.parent
+load_dotenv(_REPO_ROOT / ".env")
 
 def _load_prompt() -> str:
     """Load the analysis prompt from base-prompt.md."""
@@ -35,7 +35,7 @@ class CSVAnalyzer:
         self.client = Anthropic(api_key=self.api_key)
         self.prompt_template = _load_prompt()
         
-        schema_path = os.getenv("OUTPUT_SCHEMA")
+        schema_path = os.getenv("OUTPUT_SCHEMA") or "assets/schema.json"
         base_dir = Path(__file__).parent
         full_path = base_dir / schema_path
         
