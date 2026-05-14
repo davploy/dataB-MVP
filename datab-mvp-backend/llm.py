@@ -10,7 +10,7 @@ from anthropic import Anthropic
 from dotenv import load_dotenv
 
 
-load_dotenv()
+load_dotenv(Path(__file__).parent.parent / ".env")
 
 def _load_prompt() -> str:
     """Load the analysis prompt from base-prompt.md."""
