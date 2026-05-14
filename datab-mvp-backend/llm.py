@@ -9,8 +9,8 @@ from typing import Dict, Any, List
 from anthropic import Anthropic
 from dotenv import load_dotenv
 
-_REPO_ROOT = Path(__file__).resolve().parent.parent
-load_dotenv(_REPO_ROOT / ".env")
+
+load_dotenv(Path(__file__).parent.parent / ".env")
 
 def _load_prompt() -> str:
     """Load the analysis prompt from base-prompt.md."""
