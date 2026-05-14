@@ -173,7 +173,7 @@ onMounted(() => {
 })
 
 watch(() => props.analysisResult, () => {
-  if (svgContainer.value) {
+  if (props.analysisResult && svgContainer.value) {
     renderParallelCoordinates()
   }
 })
