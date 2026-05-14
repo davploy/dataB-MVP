@@ -12,20 +12,22 @@ const activeTab = ref('visualization')
 
 <template>
   <div class="visualization-toggle">
-    <div class="tab-buttons">
-      <button
-        :class="['tab-btn', { active: activeTab === 'json' }]"
-        @click="activeTab = 'json'"
-      >
-        JSON
-      </button>
-      <button
-        :class="['tab-btn', { active: activeTab === 'visualization' }]"
-        @click="activeTab = 'visualization'"
-      >
-        Visualization
-      </button>
-
+    <div class="header">
+      <h3 class="section-title">Analysis Result (from LLM)</h3>
+      <div class="tab-buttons">
+        <button
+          :class="['tab-btn', { active: activeTab === 'json' }]"
+          @click="activeTab = 'json'"
+        >
+          JSON
+        </button>
+        <button
+          :class="['tab-btn', { active: activeTab === 'visualization' }]"
+          @click="activeTab = 'visualization'"
+        >
+          Visualization
+        </button>
+      </div>
     </div>
 
     <div class="tab-content">
@@ -43,16 +45,30 @@ const activeTab = ref('visualization')
 .visualization-toggle {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 900px;
   min-height: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 16px;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .tab-buttons {
   display: flex;
   gap: 8px;
-  margin-bottom: 12px;
   flex-shrink: 0;
-  border-bottom: 1px solid var(--border);
 }
 
 .tab-btn {

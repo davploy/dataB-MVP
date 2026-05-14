@@ -49,6 +49,7 @@ const props = defineProps({
   margin: 0 0 12px;
   font-size: 16px;
   flex-shrink: 0;
+  padding: 5px 0;
 }
 
 .table-container {

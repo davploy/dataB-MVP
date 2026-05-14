@@ -6,7 +6,6 @@ const props = defineProps({
 
 <template>
   <div class="result-preview">
-    <h3 class="section-title">Analysis Result (from LLM)</h3>
     <pre class="preview">{{ analysisResult ? JSON.stringify(analysisResult, null, 2) : '(No analysis yet)' }}</pre>
   </div>
 </template>
@@ -15,14 +14,8 @@ const props = defineProps({
 .result-preview {
   display: flex;
   flex-direction: column;
-  height: 900px;
+  height: 100%;
   min-height: 0;
-}
-
-.section-title {
-  margin: 0 0 12px;
-  font-size: 16px;
-  flex-shrink: 0;
 }
 
 .preview {
