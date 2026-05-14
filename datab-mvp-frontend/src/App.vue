@@ -48,10 +48,6 @@ function onAnalyzeResult(payload) {
           <h3 class="section-title">CSV (from your file)</h3>
           <pre class="preview">{{ lastResult.csvText }}</pre>
         </template>
-        <template v-if="lastResult.detail">
-          <h3 class="section-title">Server / upload message</h3>
-          <pre class="preview detail-preview">{{ lastResult.detail }}</pre>
-        </template>
         <template v-if="analysisResult">
           <h3 class="section-title">Analysis Result (from LLM)</h3>
           <pre class="preview">{{ JSON.stringify(analysisResult, null, 2) }}</pre>

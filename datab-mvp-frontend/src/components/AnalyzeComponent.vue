@@ -48,6 +48,8 @@ async function onAnalyze() {
 
 <style scoped>
 button {
+  width: 100%;
+  margin-top: 20px;
   font: inherit;
   cursor: pointer;
   padding: 10px 14px;

@@ -1,7 +1,0 @@
-employee_id,name,department,salary,hire_date,performance_score
-E001,Alice Johnson,Engineering,85000,2022-03-15,4.5
-E002,Bob Smith,Sales,65000,2021-07-20,4.2
-E003,Carol White,Marketing,72000,2023-01-10,4.8
-E004,David Brown,Engineering,90000,2020-11-05,4.6
-E005,Emma Davis,HR,68000,2022-09-12,4.3
-E006,Frank Miller,Sales,70000,2023-06-01,3.9

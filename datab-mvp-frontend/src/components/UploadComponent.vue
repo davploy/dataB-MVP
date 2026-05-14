@@ -163,6 +163,7 @@ function triggerPick() {
 }
 
 .upload-btn {
+  width: 100%;
   font: inherit;
   cursor: pointer;
   padding: 10px 14px;
@@ -192,6 +193,7 @@ function triggerPick() {
   font-size: 14px;
   line-height: 1.4;
   word-break: break-word;
+  text-align: center;
 }
 
 .hint[data-kind='error'] {
