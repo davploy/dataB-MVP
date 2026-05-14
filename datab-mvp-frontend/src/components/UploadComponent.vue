@@ -71,9 +71,9 @@ async function onFileChange(event) {
 
   try {
     const url = apiUrl('/input')
-    const response = await axios.post(url, file, {
+    const response = await axios.post(url, csvText, {
       headers: {
-        'Content-Type': file.type || 'text/csv',
+        'Content-Type': 'text/csv',
       },
     })
     message.value = 'Upload successful.'

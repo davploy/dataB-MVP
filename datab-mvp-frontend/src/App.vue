@@ -1,11 +1,20 @@
 <script setup>
 import { ref } from 'vue'
 import UploadComponent from './components/UploadComponent.vue'
+import AnalyzeComponent from './components/AnalyzeComponent.vue'
 
 const lastResult = ref(null)
+const analysisResult = ref(null)
 
 function onUploadResult(payload) {
   lastResult.value = payload
+  analysisResult.value = null
+}
+
+function onAnalyzeResult(payload) {
+  if (payload.ok) {
+    analysisResult.value = payload.analysis
+  }
 }
 </script>
 
@@ -14,6 +23,10 @@ function onUploadResult(payload) {
     <aside class="sidebar" aria-label="Upload">
       <h2 class="sidebar-title">Upload</h2>
       <UploadComponent @upload-result="onUploadResult" />
+      <AnalyzeComponent 
+        :csv-text="lastResult?.csvText" 
+        @analyze-result="onAnalyzeResult"
+      />
     </aside>
     <main class="viewer">
       <h2 class="viewer-title">Viewer</h2>
@@ -39,10 +52,9 @@ function onUploadResult(payload) {
           <h3 class="section-title">Server / upload message</h3>
           <pre class="preview detail-preview">{{ lastResult.detail }}</pre>
         </template>
-        <!-- NEW BOX: Analysis JSON Results -->
-        <template v-if="lastResult.analysis">
+        <template v-if="analysisResult">
           <h3 class="section-title">Analysis Result (from LLM)</h3>
-          <pre class="preview">{{ JSON.stringify(lastResult.analysis, null, 2) }}</pre>
+          <pre class="preview">{{ JSON.stringify(analysisResult, null, 2) }}</pre>
         </template>
       </template>
     </main>
@@ -81,55 +93,46 @@ function onUploadResult(payload) {
 }
 
 .muted {
-  margin: 0;
-  color: var(--text);
+  color: var(--text-secondary);
 }
 
 .meta {
   margin: 0 0 16px;
-  color: var(--text-h);
+  font-size: 14px;
+  color: var(--text-secondary);
 }
 
 .sep {
-  margin: 0 6px;
-  color: var(--text);
+  margin: 0 8px;
 }
 
 .state-ok {
-  color: var(--accent);
+  color: var(--success);
 }
 
 .state-err {
-  color: var(--text-h);
+  color: var(--error);
 }
 
 .section-title {
-  margin: 16px 0 8px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.section-title:first-of-type {
-  margin-top: 0;
+  margin: 24px 0 12px;
+  font-size: 16px;
 }
 
 .preview {
   margin: 0;
   padding: 16px;
-  border-radius: 6px;
-  font-family: var(--mono);
-  font-size: 14px;
-  line-height: 1.45;
-  overflow: auto;
-  max-height: min(70vh, 640px);
-  color: var(--text-h);
-  background: var(--code-bg);
+  background: var(--bg-secondary);
   border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 13px;
+  line-height: 1.5;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .detail-preview {
-  max-height: min(30vh, 240px);
-  font-size: 13px;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 </style>
