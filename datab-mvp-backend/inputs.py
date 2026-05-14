@@ -9,7 +9,11 @@ analyzer = CSVAnalyzer()
 # Configure CORS more explicitly
 CORS(app, resources={
     r"/*": {
-        "origins": ["http://localhost:5000", "http://localhost:5173"],
+        "origins": [
+            "http://localhost:5000",
+            "http://localhost:5173",
+            "http://localhost:5174",
+        ],
         "methods": ["GET", "POST", "OPTIONS"],
         "allow_headers": ["Content-Type"]
     }
