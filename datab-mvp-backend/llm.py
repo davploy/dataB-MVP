@@ -79,4 +79,11 @@ class CSVAnalyzer:
         
         result = json.loads(response_text)
         
+        # Ensure outliers field exists (fallback to empty structure if missing)
+        if "outliers" not in result:
+            result["outliers"] = {
+                "detected": [],
+                "numerical_columns": []
+            }
+        
         return result

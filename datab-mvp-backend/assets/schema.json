@@ -80,6 +80,49 @@
           "description": "Analytical insights from the data"
         }
       }
+    },
+    "outliers": {
+      "type": "object",
+      "description": "Statistical outliers detected in numerical columns",
+      "properties": {
+        "detected": {
+          "type": "array",
+          "description": "List of detected outlier records",
+          "items": {
+            "type": "object",
+            "properties": {
+              "row_index": {
+                "type": "integer",
+                "description": "0-based row index of the outlier"
+              },
+              "column": {
+                "type": "string",
+                "description": "Column name containing the outlier"
+              },
+              "value": {
+                "description": "The actual outlier value (number or string representation)"
+              },
+              "z_score": {
+                "type": "number",
+                "description": "Z-score of the value (how many standard deviations from mean)"
+              },
+              "reasoning": {
+                "type": "string",
+                "description": "Explanation of why this is flagged as an outlier"
+              }
+            },
+            "required": ["row_index", "column", "value", "z_score", "reasoning"]
+          }
+        },
+        "numerical_columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of numerical column names analyzed for outliers"
+        }
+      },
+      "required": ["detected", "numerical_columns"]
     }
   },
   "required": ["metadata", "column_analysis", "summary"]
