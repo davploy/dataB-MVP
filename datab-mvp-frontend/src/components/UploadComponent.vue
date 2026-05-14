@@ -76,7 +76,7 @@ async function onFileChange(event) {
         'Content-Type': 'text/csv',
       },
     })
-    message.value = 'Upload successful.'
+    message.value = 'Upload successful'
     messageKind.value = 'success'
     const detail =
       typeof response.data === 'string'
@@ -201,6 +201,6 @@ function triggerPick() {
 }
 
 .hint[data-kind='success'] {
-  color: var(--accent);
+  color: var(--success);
 }
 </style>
