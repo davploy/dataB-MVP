@@ -209,12 +209,12 @@ watch(() => props.analysisResult, () => {
 
 .error-message {
   color: var(--error);
- 
+  font-size: 14px;
+}
 
 .no-data-message {
   color: var(--text-secondary);
   font-size: 14px;
   margin: 0;
-} font-size: 14px;
 }
 </style>
