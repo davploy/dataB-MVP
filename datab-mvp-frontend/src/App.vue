@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import UploadComponent from './components/UploadComponent.vue'
 import AnalyzeComponent from './components/AnalyzeComponent.vue'
 import CsvPreviewComponent from './components/CsvPreviewComponent.vue'
-import ResultJSONPreviewComponent from './components/ResultJSONPreviewComponent.vue'
+import VisualizationToggleComponent from './components/VisualizationToggleComponent.vue'
 
 const lastResult = ref(null)
 const analysisResult = ref(null)
@@ -43,10 +43,10 @@ function onAnalyzeResult(payload) {
       </template>
       <div class="columns">
         <div class="column">
-          <CsvPreviewComponent :csv-text="lastResult?.csvText" />
+          <CsvPreviewComponent :csv-text="lastResult?.csvText" :preview-data="lastResult?.data?.preview" />
         </div>
         <div class="column">
-          <ResultJSONPreviewComponent :analysis-result="analysisResult" />
+          <VisualizationToggleComponent :analysis-result="analysisResult" />
         </div>
       </div>
     </main>

@@ -21,10 +21,30 @@ CORS(app, resources={
 
 @app.route('/input', methods=['POST'])
 def inputs():
-    """Debug endpoint: echo back the CSV data."""
-    csv_data = request.data.decode('utf-8')
-    print(csv_data)
-    return {'status': 'received'}
+    """Parse and return CSV structure for preview."""
+    try:
+        csv_data = request.data.decode('utf-8')
+        
+        if not csv_data or not csv_data.strip():
+            return {'status': 'error', 'message': 'Empty CSV'}, 400
+        
+        # Parse CSV using analyzer's method
+        headers, rows = analyzer._parse_csv(csv_data)
+        
+        return {
+            'status': 'success',
+            'preview': {
+                'headers': headers,
+                'rows': rows,
+                'row_count': len(rows),
+                'column_count': len(headers)
+            }
+        }
+    except Exception as e:
+        import traceback
+        print(f"ERROR in /input: {str(e)}", flush=True)
+        print(traceback.format_exc(), flush=True)
+        return {'status': 'error', 'message': str(e)}, 500
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
